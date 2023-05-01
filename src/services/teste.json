@@ -1,0 +1,13 @@
+{
+  "name": "teste",
+  "contacts": [
+    {
+      "type": "phone",
+      "value": "51982237199"
+    },
+    {
+      "type": "e-mail",
+      "value": "jrbarcela@outlook.com"
+    }
+  ]
+}
