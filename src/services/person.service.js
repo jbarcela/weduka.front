@@ -37,9 +37,9 @@ class PersonService {
         }
     }
 
-    async delete(person) {
+    async delete(id) {
         try {
-            await Api.delete(`/person`);
+            await Api.delete(`/person/${id}`);
         } catch {
             return null;
         }

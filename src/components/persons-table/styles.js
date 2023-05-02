@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   padding: 20px;
-  width: 100vw;
+  width: calc(100% - 40px);
 `;
 
 export const Contacts = styled.div``;

@@ -1,30 +1,49 @@
 import {Button, Form, Input, Modal, Select, Space} from "antd";
 import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
+import {useContext, useState} from "react";
+import {PersonContext} from "../../context/person-context.jsx";
 
 const ModalPersonForm = ({open, onCreate, onCancel, person}) => {
     const [form] = Form.useForm();
+    const { selectedPerson, setSelectedPerson, addPerson, isAddLoading, updatePerson } = useContext(PersonContext);
+
+    const handleCancel = () => {
+        form.resetFields();
+        onCancel();
+    }
+
+    const handleOk = async () => {
+        const values = await form.validateFields();
+        if(selectedPerson) {
+            let person = {
+                id: selectedPerson.id,
+                ...values
+            }
+            await updatePerson(person)
+        } else {
+            await addPerson(values)
+        }
+
+        form.resetFields();
+        setSelectedPerson(null);
+        onCreate(values);
+    }
 
     return (
         <Modal
             open={open}
-            title="Adicionar nova pessoa"
-            okText="Adicionar"
+            title={selectedPerson ? "Editar pessoa" : "Adicionar nova pessoa"}
+            okText={selectedPerson ? "Editar" : "Adicionar"}
             cancelText="Cancelar"
-            onCancel={onCancel}
-            onOk={() => {
-                form
-                    .validateFields()
-                    .then((values) => {
-                        form.resetFields();
-                        onCreate(values);
-                    });
-            }}
+            onCancel={handleCancel}
+            onOk={handleOk}
+            confirmLoading={isAddLoading}
         >
             <Form
                 form={form}
                 layout="vertical"
                 name="add_person"
-                initialValues={person}
+                initialValues={selectedPerson}
             >
                 <Form.Item
                     name="name"

@@ -2,7 +2,16 @@ import {Button, Space, Table, Tooltip} from "antd";
 import {ActionsWrapper, Contact, Contacts, ContactWrapper, Container} from "./styles.js";
 import {DeleteOutlined, EditOutlined, MailOutlined, PhoneOutlined, WhatsAppOutlined} from "@ant-design/icons";
 
-const PersonsTable = ({persons, loading}) => {
+const PersonsTable = ({persons, loading, onEdit, onDelete}) => {
+
+
+    const handleEdit = (id) => {
+        onEdit(id);
+    }
+
+    const handleDelete = (id) => {
+        onDelete(id);
+    }
 
     const renderIcon = (type) => {
         switch (type) {
@@ -45,10 +54,10 @@ const PersonsTable = ({persons, loading}) => {
                     <ActionsWrapper>
                         <Space size="small">
                             <Tooltip title="Editar">
-                                <Button icon={<EditOutlined/>}/>
+                                <Button onClick={() => handleEdit(record.id)} icon={<EditOutlined/>}/>
                             </Tooltip>
                             <Tooltip title="Excluir">
-                                <Button icon={<DeleteOutlined/>}/>
+                                <Button onClick={() => handleDelete(record.id)} icon={<DeleteOutlined/>}/>
                             </Tooltip>
                         </Space>
                     </ActionsWrapper>
