@@ -1,53 +1,28 @@
-import PersonsList from "../../components/persons-list/persons-list.jsx";
 import {Container} from "./styles.js";
-import {PersonProvider} from "../../context/person-context";
+import {PersonContext, PersonProvider} from "../../context/person-context";
+import {useContext, useEffect, useState} from "react";
+import PersonsTable from "../../components/persons-table/persons-table.jsx";
+import ModalPersonForm from "../../components/modal-person-form/modal-person-form.jsx";
 
 const PersonPageContent = () => {
-    const persons = [
-        {
-            name: 'Pessoa 1',
-            contacts: [
-                {
-                    type: 'phone',
-                    value: '51982237199'
-                },
-                {
-                    type: 'whatsapp',
-                    value: '51982237199'
-                }
-            ]
-        },
-        {
-            name: 'Pessoa 2',
-            contacts: [
-                {
-                    type: 'phone',
-                    value: '51982237199'
-                },
-                {
-                    type: 'e-mail',
-                    value: 'jrbarcela@outlook.com'
-                }
-            ]
-        },
-        {
-            name: 'Jonathan 2',
-            contacts: [
-                {
-                    type: 'phone',
-                    value: '51982237199'
-                },
-                {
-                    type: 'e-mail',
-                    value: 'jrbarcela@outlook.com'
-                }
-            ]
-        }
-    ]
+    const { persons, loadPersons, isLoading } = useContext(PersonContext);
+
+    useEffect(() => {
+        loadPersons();
+    }, [])
+
+    const handleCreate = (values) => {
+        console.log(values);
+    }
+
+    const handleClose = () => {
+
+    }
 
     return (
         <Container>
-            <PersonsList persons={persons} />
+            <PersonsTable persons={persons} loading={isLoading}/>
+            <ModalPersonForm open={true} onCreate={handleCreate} onCancel={handleClose} />
         </Container>
     )
 }
